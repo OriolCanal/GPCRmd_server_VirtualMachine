@@ -1,6 +1,6 @@
 # GPCRmd_server_VirtualMachine
 
-#HOW TO CREATE A VIRTUAL MACHINE TO INSTALL GPCRMD SERVER:
+## HOW TO CREATE A VIRTUAL MACHINE TO INSTALL GPCRMD SERVER:
 
 Download the latest version of [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
@@ -22,6 +22,68 @@ Once we have started the virtual machine the mouse will be stuck to the virtual 
 We install guest additions. Here you have a [tutorial](https://linuxconfig.org/how-to-install-virtualbox-guest-additions-on-centos-7-linux).
 
 Using ctrl (right one) + f we will be able to use full screen.
+
+Download the miniconda environment that you have to use for the GPCRmd server from [here](https://drive.google.com/file/d/1CfuIF9nuCafYJLvtOtyh4gKxyhyvoOJt/view?usp=sharing)
+
+Uncompress the file and copy the miniconda3 folder to /opt:
+```
+cp miniconda3 /opt/miniconda3
+```
+And activate the environment:
+
+```
+export PATH=/opt/miniconda3/bin:$PATH
+source activate
+```
+
+## PACKAGES INSTALLATION
+Install the following packages using yum:
+```
+
+sudo yum install epel-release centos-release-scl -y
+
+sudo yum -y install cmake sqlite sqlite-devel tcl-devel tk-devel readline-devel bzip2-devel libtiff-devel freetype-devel libwebp-devel lcms2-devel cairo mod_xsendfile openblas-threads git openbabel expect htop wget clustal-omega perl-Archive-Tar perl-Digest-MD5 perl-List-MoreUtils argtable argtable-devel java-1.8.0-openjdk java-1.8.0-openjdk-devel logrotate curl PyYAML libyaml libyaml-devel libffi libffi-devel libjpeg-turbo-devel zlib zlib-devel libicu libicu-devel perl cmake sqlite sqlite-devel tcl-devel tk-devel readline-devel bzip2-devel libtiff-devel freetype-devel libwebp-devel lcms2-devel cairo
+```
+## NCBI BLAST
+
+```
+
+wget  https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-1.x86_64.rpm
+sudo yum localinstall ncbi-blast-2.11.0+-1.x86_64.rpm -y
+```
+
+## POSTGRESQL INSTALLATION FROM POSTGRES WEBPAGE
+Here you have a [link to go to the webpage](https://www.postgresql.org/download/linux/redhat). Follow the instructions to create a postgreSQL Yum repository from the link. Here I put the instructions from the link to Install version 10.
+
+```
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+sudo yum install -y postgresql14-server
+sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
+sudo systemctl enable postgresql-14
+sudo systemctl start postgresql-14
+
+```
+
+## Install boost >1.58:
+```
+conda install boost==1.61.0
+```
+
+## RDkit
+
+```
+wget https://github.com/rdkit/rdkit/archive/Release_2016_03_1.tar.gz
+tar -zxvf Release_2016_03_1.tar.gz
+cd rdkit-Release_2016_03_1/
+export RDBASE=$(pwd)
+mkdir build
+cd build
+source activate #(hem de tenir l'entorn de miniconda carregat)
+cmake -D RDK_BUILD_SWIG_WRAPPERS=OFF -D PYTHON_EXECUTABLE=/opt/miniconda3/bin/python -D PYTHON_LIBRARY=/opt/miniconda3/lib/libpython3.so -D PYTHON_INCLUDE_DIR=/opt/miniconda3/include/python3.4m -D RDK_BUILD_AVALON_SUPPORT=ON -D RDK_BUILD_INCHI_SUPPORT=ON -D BOOST_ROOT=/opt/miniconda3 -D PYTHON_INSTDIR=/opt/miniconda3/lib/python3.4/site-packages -DRDK_INSTALL_INTREE=OFF -DCMAKE_INSTALL_PREFIX=/usr/local/rdkit ..
+make -j2
+sudo make install -j2
+```
+
 
 
 
