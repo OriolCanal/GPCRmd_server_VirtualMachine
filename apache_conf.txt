@@ -1,0 +1,76 @@
+Instalant mod_wsgi per un python de miniconda
+=============================================
+
+Tenim un server amb apache de distro (Centos 7.x) on caldra posar un webservice desenvolupat amb python 3.4 
+
+1.- Instal.lem apache de distro i els paquets de devel
+
+yum install httpd httpd-devel
+
+2.- engeguem el servei i el configurem per a que arrenqui:
+
+systemctl enable httpd
+systemctl start httpd
+
+3.- ajustem regles de firewall
+
+firewall-cmd --add-service=http
+firewall-cmd --add-service=http --permanent
+firewall-cmd --add-service=https
+firewall-cmd --add-service=http --permanent
+
+
+4.- instal.lem un miniconda que porti el python 3.4 (vaig haver de baixar-me un antic)
+
+sh Miniconda3-3.10.1-Linux-x86_64.sh
+
+5.- instalem el mod_wsgi
+
+/opt/miniconda3/bin/pip  install mod_wsgi
+
+6.- executem
+
+mod_wsgi-express module-config
+
+Que ens diu el que haurem de posar a la config d'apache
+
+LoadModule wsgi_module "/opt/miniconda3/lib/python3.4/site-packages/mod_wsgi/server/mod_wsgi-py34.cpython-34m.so"
+WSGIPythonHome "/opt/miniconda3"
+
+
+7.- Ho afegim a la config d'apache.Per ser una mica ney ho poso a un fitxer de conf amb el nom del webservice:
+
+cat /etc/httpd/conf.d/gpcrmd.conf 
+LoadModule wsgi_module "/opt/miniconda3/lib/python3.4/site-packages/mod_wsgi/server/mod_wsgi-py34.cpython-34m.so"
+WSGIPythonHome "/opt/miniconda3"
+
+
+8.- reengeguem el servei d'apache per veure que el modul el pot carregar:
+
+systemctl restart httpd
+systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: active (running) since Thu 2020-11-12 09:27:09 CET; 10min ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 11075 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/httpd.service
+           ├─11075 /usr/sbin/httpd -DFOREGROUND
+           ├─11076 /usr/sbin/httpd -DFOREGROUND
+           ├─11077 /usr/sbin/httpd -DFOREGROUND
+           ├─11078 /usr/sbin/httpd -DFOREGROUND
+           ├─11079 /usr/sbin/httpd -DFOREGROUND
+           ├─11080 /usr/sbin/httpd -DFOREGROUND
+           └─11081 /usr/sbin/httpd -DFOREGROUND
+
+Nov 12 09:27:09 whitewizard.prib.upf.edu systemd[1]: Starting The Apache HTTP...
+Nov 12 09:27:09 whitewizard.prib.upf.edu systemd[1]: Started The Apache HTTP ...
+Hint: Some lines were ellipsized, use -l to show in full.
+
+grep wsgi /var/log/httpd/error_log 
+
+[Thu Nov 12 09:27:09.560858 2020] [mpm_prefork:notice] [pid 11075] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_fcgid/2.3.9 mod_wsgi/4.7.1 Python/3.4 configured -- resuming normal operations
+
+
