@@ -15,13 +15,20 @@ Give at least 50GB of memory to your virtual machine.
 Start your virtual machine:
 give internet connexion and change the keyboard to a convenient one in the installation step. In addition, create a user with all permisions. 
  
-I also recommend to activate the GNOME graphical interface
+I also recommend to activate the GNOME graphical interface.
 
-Once we have started the virtual machine the mouse will be stuck to the virtual machine. Using ctrl (the right one on the keyboard we will be able to return the mouse to our graphical interface).
+Once we have started the virtual machine the mouse will be stuck to the virtual machine. Using ctrl (the right one on the keyboard we will be able to return the mouse to our graphical interface). In addition using ctrl (right one) + f we will be able to use full screen.
 
 We install guest additions. Here you have a [tutorial](https://linuxconfig.org/how-to-install-virtualbox-guest-additions-on-centos-7-linux).
 
-Using ctrl (right one) + f we will be able to use full screen.
+To make sure that we have properly installed the CentOS7 machine in virtualbox just type in terminal:
+
+```
+cat /etc/redhat-release 
+```
+It should indicate that you have CentOS Linux release 7.*.* (Core)
+
+### MINICONDA ENVIRONMENT
 
 Download the miniconda environment that you have to use for the GPCRmd server from [here](https://drive.google.com/file/d/1CfuIF9nuCafYJLvtOtyh4gKxyhyvoOJt/view?usp=sharing)
 
@@ -35,6 +42,15 @@ And activate the environment:
 export PATH=/opt/miniconda3/bin:$PATH
 source activate
 ```
+## APACHE CONFIGURATION 
+
+We install apache:
+
+```
+yum install httpd httpd-devel -y
+systemctl enable httpd.service
+```
+and we add the configuration of apache (explined how to do in the file: [apache_conf.txt](https://github.com/OriolCanal/GPCRmd_server_VirtualMachine/blob/main/apache_conf.txt))
 
 ## PACKAGES INSTALLATION
 Install the following packages using yum:
@@ -83,6 +99,17 @@ cmake -D RDK_BUILD_SWIG_WRAPPERS=OFF -D PYTHON_EXECUTABLE=/opt/miniconda3/bin/py
 make -j2
 sudo make install -j2
 ```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
