@@ -101,18 +101,83 @@ sudo make install -j2
 ```
 
 
+## GENERATING CERTIFICATES
+
+Create a directory:
+
+```
+mkdir certificats
+cd certificats
+```
+
+```
+openssl genrsa -des3 -out server.key 1024
+```
+
+We enter the pass phrase (whatever)
+
+```
+openssl req -new -key server.key -out server.csr
+```
+We enter pass phare (whatever)
+contry name : ES
+state or province name : Bcn
+Locality name: Bcn
+Organization name: GPCR Lab
+Organizational Unit name: GPCR
+Common name: gpcr.test
+Email adress: xxx@gpcr.test
+challange password: whatever2022
+
+```
+cp server.key server.key.org
+openssl rsa -in server.key.org -out server.key
+```
+Enter pass phrase
+
+```
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+```
+We have generate the certificate : gpcr.crt
+and the key: gpcr.key
+
+We copy these files to the conf of apache:
+
+```
+cp server.crt /etc/pki/tls/certs/gpcr.crt
+cp server.key /etc/pki/tls/private/gpcr.key
+```
+
+Ìnstall some packages:
+```
+yum install openssl-devel
+yum install openssl -y
+yum install httpd24-mod_ssl
+yum install mod_ssl
+```
+
+Now in /etc/pki/tls/certs should appear the ssl.conf file
+
+Edit this file and in the following part to include where the certificate can be found(SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) :
+
+#   Server Certificate:
+# Point SSLCertificateFile at a PEM encoded certificate.  If
+# the certificate is encrypted, then you will be prompted for a
+# pass phrase.  Note that a kill -HUP will prompt again.  A new
+# certificate can be generated using the genkey(1) command.
+SSLCertificateFile /etc/pki/tls/certs/gpcr.crt
 
 
 
+Also include where the key can be found: (SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key)
+#   Server Private Key:
+#   If the key is not combined with the certificate, use this
+#   directive to point at the key file.  Keep in mind that if
+#   you've both a RSA and a DSA private key you can configure
+#   both in parallel (to also allow the use of DSA ciphers, etc.)
+SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key
 
-
-
-
-
-
-
-
-
+Save the file
 
 
 
