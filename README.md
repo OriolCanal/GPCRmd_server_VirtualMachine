@@ -160,7 +160,7 @@ Now in /etc/pki/tls/certs should appear the ssl.conf file
 
 Edit this file and in the following part to include where the certificate can be found(SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) :
 
-#   Server Certificate:
+#  Server Certificate:
 # Point SSLCertificateFile at a PEM encoded certificate.  If
 # the certificate is encrypted, then you will be prompted for a
 # pass phrase.  Note that a kill -HUP will prompt again.  A new
