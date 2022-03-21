@@ -4,7 +4,7 @@
 
 Download the latest version of [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
-open virtualbox:
+Open virtualbox:
 ```
 virtualbox
 ```
