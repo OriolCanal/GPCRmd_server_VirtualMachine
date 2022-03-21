@@ -30,10 +30,11 @@ It should indicate that you have CentOS Linux release 7.*.* (Core)
 
 ### MINICONDA ENVIRONMENT
 
-Download the miniconda environment that you have to use for the GPCRmd server from [here](https://drive.google.com/file/d/1CfuIF9nuCafYJLvtOtyh4gKxyhyvoOJt/view?usp=sharing)
+Download the miniconda environment that you have to use for the GPCRmd server from [here](https://drive.google.com/file/d/1CfuIF9nuCafYJLvtOtyh4gKxyhyvoOJt/view?usp=sharing).
 
 Uncompress the file and copy the miniconda3 folder to /opt:
 ```
+tar -xzvf miniconda-installation.tgz
 cp miniconda3 /opt/miniconda3
 ```
 And activate the environment:
@@ -54,16 +55,17 @@ and we add the configuration of apache (explined how to do in the file: [apache_
 
 ## PACKAGES INSTALLATION
 Install the following packages using yum:
-```
 
+```
 sudo yum install epel-release centos-release-scl -y
 
 sudo yum -y install cmake sqlite sqlite-devel tcl-devel tk-devel readline-devel bzip2-devel libtiff-devel freetype-devel libwebp-devel lcms2-devel cairo mod_xsendfile openblas-threads git openbabel expect htop wget clustal-omega perl-Archive-Tar perl-Digest-MD5 perl-List-MoreUtils argtable argtable-devel java-1.8.0-openjdk java-1.8.0-openjdk-devel logrotate curl PyYAML libyaml libyaml-devel libffi libffi-devel libjpeg-turbo-devel zlib zlib-devel libicu libicu-devel perl cmake sqlite sqlite-devel tcl-devel tk-devel readline-devel bzip2-devel libtiff-devel freetype-devel libwebp-devel lcms2-devel cairo
 ```
 ## NCBI BLAST
 
-```
+Install NCBI Blast:
 
+```
 wget  https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-1.x86_64.rpm
 sudo yum localinstall ncbi-blast-2.11.0+-1.x86_64.rpm -y
 ```
