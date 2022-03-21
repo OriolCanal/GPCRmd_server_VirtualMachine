@@ -205,6 +205,13 @@ Create the following directories:
 
 /protwis/sites/protwis
 
+and give permissions to edit their content:
+
+```
+chmod 777 /protwis/
+```
+
+
 Unizp the github repository compressed file And store all the unziped files into the /protwis/sites/protwis/ directory:
 
 ```
