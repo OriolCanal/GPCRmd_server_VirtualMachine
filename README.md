@@ -69,7 +69,9 @@ sudo yum localinstall ncbi-blast-2.11.0+-1.x86_64.rpm -y
 ```
 
 ## POSTGRESQL INSTALLATION FROM POSTGRES WEBPAGE
-Here you have a [link to go to the webpage](https://www.postgresql.org/download/linux/redhat). Follow the instructions to create a postgreSQL Yum repository from the link. Here I put the instructions from the link to Install version 10.
+Here you have a [link to go to the postgresql webpage](https://www.postgresql.org/download/linux/redhat) where you will find all the instructions to create a postgreSQL Yum repository. Install version 10 of postgresql. 
+
+Here I put the instructions from the link to Install version 10:
 
 ```
 sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
@@ -87,6 +89,8 @@ conda install boost==1.61.0
 
 ## RDkit
 
+RDKit is a collection of cheminformatics and machine-learning software written in C++ and Python. We can install it executing these commands. We need to have the miniconda environment loaded:
+
 ```
 wget https://github.com/rdkit/rdkit/archive/Release_2016_03_1.tar.gz
 tar -zxvf Release_2016_03_1.tar.gz
@@ -94,7 +98,7 @@ cd rdkit-Release_2016_03_1/
 export RDBASE=$(pwd)
 mkdir build
 cd build
-source activate #(hem de tenir l'entorn de miniconda carregat)
+source activate 
 cmake -D RDK_BUILD_SWIG_WRAPPERS=OFF -D PYTHON_EXECUTABLE=/opt/miniconda3/bin/python -D PYTHON_LIBRARY=/opt/miniconda3/lib/libpython3.so -D PYTHON_INCLUDE_DIR=/opt/miniconda3/include/python3.4m -D RDK_BUILD_AVALON_SUPPORT=ON -D RDK_BUILD_INCHI_SUPPORT=ON -D BOOST_ROOT=/opt/miniconda3 -D PYTHON_INSTDIR=/opt/miniconda3/lib/python3.4/site-packages -DRDK_INSTALL_INTREE=OFF -DCMAKE_INSTALL_PREFIX=/usr/local/rdkit ..
 make -j2
 sudo make install -j2
@@ -158,7 +162,7 @@ yum install mod_ssl
 
 Now in /etc/pki/tls/certs should appear the ssl.conf file
 
-Edit this file and in the following part to include where the certificate can be found(SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) :
+Edit the ssl.conf file using a text editor and include where the certificate can be found(SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) :
 
 #Server Certificate:  
 #Point SSLCertificateFile at a PEM encoded certificate. If     
@@ -180,29 +184,36 @@ SSLCertificateFile /etc/pki/tls/certs/gpcr.crt
 #both in parallel (to also allow the use of DSA ciphers, etc.)  
 SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key  
 
-Save the file
+
+Finally, save the file.
 
 
 
 
 ## TRANSFER OF GPCRMD FILES
 
-We will transfer a subset of simulations as the whole dataset as the memory of the virtual machine won't be able to support it.
+We will transfer a subset of simulations as the virtual machine won't be able to support the whole dataset.
 
 We can download the gpcrmd server from [here](https://github.com/GPCRmd/gpcrdb).
 
 You will need permissions to see and download the contents of the previous github repository.
 
-You download all the data from the github repository and unzip the downloaded compressed file.
+You download all the data from the github repository.
 
 
-Create the following directory:
+Create the following directories:
 
 /protwis/sites/protwis
 
-And store all the unziped files into this directory.
+Unizp the github repository compressed file And store all the unziped files into the /protwis/sites/protwis/ directory:
 
-Create a files drectory into /protiwis/sites:
+```
+unzip gpcrdb-dev.zip
+cd gpcrdb-dev
+mv -r * /protwis/sites/protwis/
+```
+
+Create a  directory into /protiwis/sites named files where we will store a subset of the GPCRmd database files:
 ```
 cd /protwis/sites
 mkdir files
@@ -221,10 +232,11 @@ scp -r username@ori:/protwis/sites/files/test .
 scp -r username@ori:/protwis/sites/files/Covid19Dynamics .
 ```
 
-In addition, we also have to copy a subset of dynamics simulations. So we create a folder and copy a subset of simulations into it:
+In addition, we also have to copy a subset of dynamics simulations. So we create a Dynamics folder and copy a subset of simulations into it:
 
 ``` 
 mkdir Dynamics
+cd Dynamics
 sudo scp -r username@ori:/protwis/sites/files/Dynamics/*dyn_688* .
 sudo scp -r username@ori:/protwis/sites/files/Dynamics/*trj_688* .
 sudo scp -r username@ori:/protwis/sites/files/Dynamics/*dyn_700* .
