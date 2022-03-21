@@ -160,30 +160,76 @@ Now in /etc/pki/tls/certs should appear the ssl.conf file
 
 Edit this file and in the following part to include where the certificate can be found(SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) :
 
-#  Server Certificate:
-# Point SSLCertificateFile at a PEM encoded certificate.  If
-# the certificate is encrypted, then you will be prompted for a
-# pass phrase.  Note that a kill -HUP will prompt again.  A new
-# certificate can be generated using the genkey(1) command.
-SSLCertificateFile /etc/pki/tls/certs/gpcr.crt
+#Server Certificate:
+#Point SSLCertificateFile at a PEM encoded certificate.  If   
+#the certificate is encrypted, then you will be prompted for a  
+#pass phrase.  Note that a kill -HUP will prompt again.  A new  
+#certificate can be generated using the genkey(1) command.  
+SSLCertificateFile /etc/pki/tls/certs/gpcr.crt  
 
 
 
-Also include where the key can be found: (SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key)
-#   Server Private Key:
-#   If the key is not combined with the certificate, use this
-#   directive to point at the key file.  Keep in mind that if
-#   you've both a RSA and a DSA private key you can configure
-#   both in parallel (to also allow the use of DSA ciphers, etc.)
-SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key
+### Also include where the key can be found: (SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key)  
+  
+    
+    
+#Server Private Key:  
+#If the key is not combined with the certificate, use this  
+#directive to point at the key file.  Keep in mind that if  
+#you've both a RSA and a DSA private key you can configure  
+#both in parallel (to also allow the use of DSA ciphers, etc.)  
+SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key  
 
 Save the file
 
 
 
 
+## TRANSFER OF GPCRMD FILES
+
+We will transfer a subset of simulations as the whole dataset as the memory of the virtual machine won't be able to support it.
+
+We can download the gpcrmd server from [here](https://github.com/GPCRmd/gpcrdb).
+
+You will need permissions to see and download the contents of the previous github repository.
+
+You download all the data from the github repository and unzip the downloaded compressed file.
 
 
+Create the following directory:
+
+/protwis/sites/protwis
+
+And store all the unziped files into this directory.
+
+Create a files drectory into /protiwis/sites:
+```
+cd /protwis/sites
+mkdir files
+cd files
+```
+
+Now we have to download files from ori using scp:
+
+```
+scp -r username@ori:/protwis/sites/files/Covid19Data .
+scp -r username@ori:/protwis/sites/files/Model .
+scp -r username@ori:/protwis/sites/files/Molecule .
+scp -r username@ori:/protwis/sites/files/Molecule_sc .
+scp -r username@ori:/protwis/sites/files/Summary .
+scp -r username@ori:/protwis/sites/files/test .
+scp -r username@ori:/protwis/sites/files/Covid19Dynamics .
+```
+
+In addition, we also have to copy a subset of dynamics simulations. So we create a folder and copy a subset of simulations into it:
+
+``` 
+mkdir Dynamics
+sudo scp -r username@ori:/protwis/sites/files/Dynamics/*dyn_688* .
+sudo scp -r username@ori:/protwis/sites/files/Dynamics/*trj_688* .
+sudo scp -r username@ori:/protwis/sites/files/Dynamics/*dyn_700* .
+sudo scp -r username@ori:/protwis/sites/files/Dynamics/*trj_700* .
+```
 
 
 I also recommend to activate the GNOME graphical interface
