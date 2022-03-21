@@ -118,14 +118,16 @@ cd certificats
 openssl genrsa -des3 -out server.key 1024
 ```
 
-We enter the pass phrase (whatever)
+We will be asked to enter a pass phrase.
+
+
 
 ```
 openssl req -new -key server.key -out server.csr
 ```
-We enter pass phare (whatever)
-contry name : ES
-state or province name : Bcn
+We enter pass phrase (whatever)
+Contry name : ES
+State or province name : Bcn
 Locality name: Bcn
 Organization name: GPCR Lab
 Organizational Unit name: GPCR
@@ -137,7 +139,7 @@ challange password: whatever2022
 cp server.key server.key.org
 openssl rsa -in server.key.org -out server.key
 ```
-Enter pass phrase
+Again we will be asked to enter a pass phrase
 
 ```
 openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
@@ -162,7 +164,7 @@ yum install mod_ssl
 
 Now in /etc/pki/tls/certs should appear the ssl.conf file
 
-Edit the ssl.conf file using a text editor and include where the certificate can be found(SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) :
+Edit the ssl.conf file using a text editor and include where the certificate (SSLCertificateFile /etc/pki/tls/certs/gpcr.crt) and the key (SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key) can be found. You just have to replace the 2 paragraphs that you have below in the ssl.conf file:
 
 #Server Certificate:  
 #Point SSLCertificateFile at a PEM encoded certificate. If     
@@ -172,8 +174,7 @@ Edit the ssl.conf file using a text editor and include where the certificate can
 SSLCertificateFile /etc/pki/tls/certs/gpcr.crt  
 
 
-
-### Also include where the key can be found: (SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key)  
+  
   
     
     
@@ -185,7 +186,7 @@ SSLCertificateFile /etc/pki/tls/certs/gpcr.crt
 SSLCertificateKeyFile /etc/pki/tls/private/gpcr.key  
 
 
-Finally, save the file.
+Finally, you just have to save the file.
 
 
 
