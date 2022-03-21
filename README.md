@@ -19,7 +19,7 @@ I also recommend to activate the GNOME graphical interface.
 
 Once we have started the virtual machine the mouse will be stuck to the virtual machine. Using ctrl (the right one on the keyboard we will be able to return the mouse to our graphical interface). In addition using ctrl (right one) + f we will be able to use full screen.
 
-We install guest additions. Here you have a [tutorial](https://linuxconfig.org/how-to-install-virtualbox-guest-additions-on-centos-7-linux).
+We install guest additions. Here you have a [tutorial](https://linuxconfig.org/how-to-install-virtualbox-guest-additions-on-centos-7-linux) on how to install and run it.
 
 To make sure that we have properly installed the CentOS7 machine in virtualbox just type in terminal:
 
