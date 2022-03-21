@@ -107,7 +107,7 @@ sudo make install -j2
 
 ## GENERATING CERTIFICATES
 
-Create a directory:
+Create a directory where the certificates will be stored:
 
 ```
 mkdir certificats
@@ -227,7 +227,7 @@ mkdir files
 cd files
 ```
 
-Now we have to download files from ori using scp:
+Now we have to download files from ori using scp (to do this step you need to have a user in ori). You will need to enter the ori user password in every command you execute:
 
 ```
 scp -r username@ori:/protwis/sites/files/Covid19Data .
