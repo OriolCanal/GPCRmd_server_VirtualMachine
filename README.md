@@ -310,7 +310,7 @@ conda install boost==1.61.0
 
 
 
-
+sudo cp -r * /opt/miniconda3/lib/python3.4/site-packages/rdkit/
 
 ERRRORS:
 
