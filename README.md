@@ -73,14 +73,22 @@ sudo yum localinstall ncbi-blast-2.11.0+-1.x86_64.rpm -y
 ## POSTGRESQL INSTALLATION FROM POSTGRES WEBPAGE
 Here you have a [link to go to the postgresql webpage](https://www.postgresql.org/download/linux/redhat) where you will find all the instructions to create a postgreSQL Yum repository. Install version 10 of postgresql. 
 
-Here I put the instructions from the link to Install version 10:
+Here I put the instructions from the link to Install version 10 :
 
 ```
+# Install the repository RPM:
 sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-sudo yum install -y postgresql14-server
-sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-sudo systemctl enable postgresql-14
-sudo systemctl start postgresql-14
+
+# Install PostgreSQL:
+sudo yum install -y postgresql10-server
+
+# Optionally initialize the database and enable automatic start:
+sudo /usr/pgsql-10/bin/postgresql-10-setup initdb
+sudo sed -i 's/ident/md5/g' /var/lib/pgsql/10/data/pg_hba.conf 
+
+
+sudo systemctl enable postgresql-10
+sudo systemctl start postgresql-10
 
 ```
 
