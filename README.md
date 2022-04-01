@@ -92,6 +92,26 @@ sudo systemctl start postgresql-10
 
 ```
 
+## SOLR INSTALLATION:
+
+
+```
+curl -sLO https://archive.apache.org/dist/lucene/solr/6.4.2/solr-6.4.2.tgz
+tar xzf solr*.tgz solr*/bin/install_solr_service.sh --strip-components=2
+bash ./install_solr_service.sh solr*.tgz -f
+mkdir -p /var/solr/data/collection_gpcrmd/
+mkdir -p /var/solr/data/collection_gpcrmd/data
+```
+
+You can find the core.properties file [here](https://github.com/OriolCanal/GPCRmd_server_VirtualMachine/blob/main/core.properties)
+
+```
+cp core.properties /var/solr/data/collection_gpcrmd/core.properties
+
+ln -s /var/solr/data/collection_gpcrmd/conf /protwis/sites/protwis/solr/collection_gpcrmd/conf/
+service solr restart
+```
+
 ## Install boost >1.58:
 ```
 conda install boost==1.61.0
