@@ -51,7 +51,7 @@ We install apache:
 yum install httpd httpd-devel -y
 systemctl enable httpd.service
 ```
-and we add the configuration of apache (explined how to do in the file: [apache_conf.txt](https://github.com/OriolCanal/GPCRmd_server_VirtualMachine/blob/main/apache_conf.txt))
+
 
 Turn on the service 
 ```
@@ -93,6 +93,7 @@ systemctl restart httpd
 systemctl status httpd
 ```
 The service should be running correctly.
+
 
 
 ## PACKAGES INSTALLATION
