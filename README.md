@@ -53,6 +53,48 @@ systemctl enable httpd.service
 ```
 and we add the configuration of apache (explined how to do in the file: [apache_conf.txt](https://github.com/OriolCanal/GPCRmd_server_VirtualMachine/blob/main/apache_conf.txt))
 
+Turn on the service 
+```
+systemctl enable httpd
+systemctl start httpd
+```
+
+We adjust rules of thefirewall:
+
+```
+firewall-cmd --add-service=http
+firewall-cmd --add-service=http --permanent
+firewall-cmd --add-service=https
+firewall-cmd --add-service=http --permanent
+```
+
+Install mod-wsgi:
+```
+/opt/miniconda3/bin/pip  install mod_wsgi
+```
+Execute:
+```
+mod_wsgi-express module-config
+```
+This will show in terminal what we have to put on the apache configuration, something like: LoadModule wsgi_module "/opt/miniconda3/lib/python3.4/site-packages/mod_wsgi/server/mod_wsgi-py34.cpython-34m.so"
+WSGIPythonHome "/opt/miniconda3"
+
+We add it to the apache configuration file which we will give the name of the webservice (change the LoadModule.... with the output of the previous command):
+
+```
+cat /etc/httpd/conf.d/gpcrmd.conf LoadModule wsgi_module "/opt/miniconda3/lib/python3.4/site-packages/mod_wsgi/server/mod_wsgi-py34.cpython-34m.so"
+WSGIPythonHome "/opt/miniconda3"
+```
+
+Restart the server to see if the module can load it:
+
+```
+systemctl restart httpd
+systemctl status httpd
+```
+The service should be running correctly.
+
+
 ## PACKAGES INSTALLATION
 Install the following packages using yum:
 
