@@ -262,6 +262,86 @@ sudo scp -r username@ori:/protwis/sites/files/Dynamics/*trj_700* .
 ```
 
 
+## CREATING DATABASE
+
+First of all we need to create an user named protwis in postgres:
+```
+sudo -u postgres createuser -s -P protwis
+```
+It will request a new password for the user:
+
+"Enter password for new role: "
+
+
+Now we need to create a database:
+
+```
+sudo -u postgres createdb -U protwis -h localhost protwis
+```
+
+You will be requested to enter the password that you have created before.
+
+
+
+
+Now we need to connect to postgres (You may need to create a password for root privilegies in postgres):
+```
+su postgres
+```
+
+Inside postgres run:
+```
+psql
+```
+Now we are on psql which is a terminal-based front-end to PostgreSQL. Here we need to create an user and the database where the gpcrmd server will be stored. So, run the following commands on psql:
+```
+CREATE ROLE schedulers
+  NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+CREATE ROLE scheduler LOGIN
+  NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+GRANT schedulers TO scheduler;
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA public
+  AUTHORIZATION postgres;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO protwis;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public
+  IS 'standard public schema';
+CREATE EXTENSION hstore;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 I also recommend to activate the GNOME graphical interface
 
 Download miniconda3 from: (miniconda with python version 3.4 which is required from Ismael):
