@@ -313,6 +313,41 @@ CREATE EXTENSION hstore;
 ```
 
 
+## DATABASE CREATION
+
+Clone the gpcrmd_vagrant repository from GitHub:
+```
+git clone --recursive git@github.com:GPCRmd/gpcrmd_vagrant.git ~/gpcrmd_vagrant
+cd ~/gpcrmd_vagrant
+```
+
+Download the dump07042020.backup file from [here](https://github.com/GPCRmd/gpcrmd_data/releases/tag/v0.3) and copy it into next folder: '~/gpcrmd_vagrant/shared/db/'.
+```
+cp ~/Downloads/dump07042020.backup ~/gpcrmd_vagrant/shared/db/
+```
+And create the following link:
+```
+cd ~/gpcrmd_vagrant/shared/db/
+ln -s dump07042020.backup ~/gpcrmd_vagrant/shared/db/dump.backup
+```
+
+Finally run:
+```
+pg_restore -h localhost -U protwis -d protwis ~/gpcrmd_vagrant/shared/db/dump.backup
+```
+It will request the password and it will take some minutes to be executed.
+
+## START Django DEVELOPMENT WEBSERVER
+
+```
+cd /protwis/sites/protwis
+python runserver 0.0.0.0:8000
+```
+FINALLY YOU ARE ALL SET UP!
+
+The webserver will now be accessible from http://localhost:8000 
+
+
 
 
 
