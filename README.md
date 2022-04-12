@@ -461,6 +461,14 @@ and
 app.cfg
 
 
+cd /www/httpd/mdsrv
+mkdir mdsrv
+cd mdsrv
+
+
+link amb nom webapp que porti a la carpeta webapp que està a miniconda
+ln -s webapp /
+
 ## START Django DEVELOPMENT WEBSERVER
 
 ```
