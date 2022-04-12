@@ -398,7 +398,68 @@ Finally run:
 ```
 pg_restore -h localhost -U protwis -d protwis ~/gpcrmd_vagrant/shared/db/dump.backup
 ```
-It will request the password and it will take some minutes to be executed.
+It will request the password and it will take some minutes to be executed. 
+
+
+
+## MDSRV SERVER
+
+fa servir servidor independent 
+
+cONFIGURACIO FITXER APACHE, file: 
+
+```
+cd /etc/httpd/conf/
+gedit httpd.conf
+```
+
+We have to include listen 8082 and 8081 also.
+
+Now we have to stop the firewall of centos (seelinux):
+
+https://linuxize.com/post/how-to-disable-selinux-on-centos-7/
+
+
+
+Then we have the access to the required ports
+
+all that we have in the folder www is property of apache
+```
+cd /www
+sudo chgrp -r apache *
+```
+
+here we have a folder mdrsv that is the server for the visualization of proteins
+cd /etc/httpd/conf.d/
+
+open file:
+
+gedit gpcrmd.conf
+
+download the file gpcrmd.conf that you can see in this github and paste in your virtual machine cd /etc/httpd/conf.d/gpcrmd.conf
+
+BE AWARE: in this file you will find python-home that should indicate the path where you have your python. In this case miniconda3.
+
+we create a folder named logs ini root: (mirar exactament on esta la carpeta logs)
+
+
+cd 
+mkdir logs
+
+and we give permisions to apache
+
+sudo chgrp -r logs
+sudo chmod 777 logs
+
+donar permisos de lectura i escriptura a chmod 777 /protwis/sites/files
+
+copy the files from this githut to /var/www/mdsrv
+
+filenames: 
+mdsrv.wsgi
+and
+app.cfg
+
 
 ## START Django DEVELOPMENT WEBSERVER
 
@@ -503,6 +564,27 @@ ERRRORS:
 PACKAGES PROBLEMS WITH BIOPYTHON
 when installing bokeh it appears:
 ERROR: PyYAML requires Python '>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*' but the running Python is 3.4.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
