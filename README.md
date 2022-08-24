@@ -76,8 +76,10 @@ If all works properly you should go to the main menu of GPCRmd:
  
  If you need to go to an example of the GPCRmd workbench you should use the dynID 36 as it is the only one that has the trajectories included in the virtual machine (due to memory reasons). You can go directly there using the following url:
  
- localhost:8000/view/36/
+ [localhost:8000/view/36/](http://localhost:8000/view/36/)
  
+ and you should be able to access to a workbench example:
+ ![](./Pictures/GPCRmd_workbench.png)
  
 
 
