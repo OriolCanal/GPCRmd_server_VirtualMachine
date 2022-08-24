@@ -387,6 +387,13 @@ Create a  directory into /protiwis/sites named files where we will store a subse
 cd /protwis/sites
 mkdir files
 cd files
+mkdir Covid19Data
+mkdir Model
+mkdir Molecule
+mkdir Molecule_sc
+mkdir Summary
+mkdir test
+mkdir Covid19Dynamics
 ```
 
 Now we have to download files from ori using scp (to do this step you need to have a user in ori). You will need to enter the ori user password in every command you execute:
