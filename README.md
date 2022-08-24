@@ -1,5 +1,73 @@
 # GPCRMD_VIRTUAL_MACHINE_SERVER
 
+The main advantage of working with a virtual machine is their portability as it's easy to be able to create VMs on one machine and move them to another or create a clone. Here we have pre-configured a virtual machine that you can import in a snap and get working right away. Here we will show you how to import the OVA file of the GPCRmd server in VirtualBox.
+
+## WHAT IS AN OVA FILE?
+
+An OVA (Open Virtual Appliances) file is a package that contains files used to describe a virtual machine. So, it is used to set up virtual machines through software like VirtualBox. In this case the OVA file created will have all the installation required for the GPCRmd server to run properly. In this way, you will be able to obtain a GPCRmd development server without having to spend time with the installation procedure.
+
+## IMPORTING THE OVA FILE
+
+You can obtain the OVA file of the GPCRmd server in the following path:
+
+```
+/gpcr/users/shared/GPCRmd_virtual_machine_backup/
+```
+Here you will find a file called backup_virtualMachine_GPCRmd.ova. You will have to copy this file in the machine you want to install your GPCRmd developer server. You can do creating a tunnel via ssh and copying the file as follows (changing the "username" by your real username :) ):
+```
+ssh -f -X username@zeus.upf.edu -N -L 5555:boromir.prib.upf.edu:22
+scp -r -P 5555 username@localhost:/gpcr/users/shared/GPCRmd_virtual_machine_backup/backup_virtualMachine_GPCRmd.ova .
+```
+It can take some time to copy the file to your final destination.
+
+## VIRTUALBOX INSTALLATION
+
+Execute the following commands to install and run virtualbox (if you are using ubuntu repository):
+
+```
+sudo apt-get update
+sudo apt-get install virtualbox
+sudo apt-get install virtualbox—ext–pack
+```
+Then, you should accept the Licenses selecting <ok> and <Yes> buttons.
+
+Finally you can open virtualbox using the following command:
+
+```
+virtualbox
+```
+
+
+## OVA FILE INSTALLATION:
+
+Once you have your VirtualBox running, click on "File" in the top menu and then select "Import Appliance...".
+
+A new window will pop open with a field to select your .ove file. Browse to the directory where you copied the backup_virtualMachine_GPCRmd.ova file. Once selected click on next.
+
+Then it will appear a window where you can choose the key features of the virtual machine (e.g. CPU, RAM ....). Finally click on import button and it can take some time (30 min aprox) to complete the process. After the process completes your Virtual Machine will be ready to use.
+
+## IMPORTANT FEATURES TO KNOW!
+
+When you open your Virtual Machine, you will have to log in as **GPCRmdServer** user. It's password is: **GPCRmd**. Here you will have all the installation required for the GPCRmd server to run.
+
+In order to run the server you should go to the following directory:
+
+```
+cd /protwis/sites/protwis/
+```
+and here you should execute the following command:
+
+```
+python manage.py runserver 0.0.0.0:8000
+```
+It will take some seconds to execute. You should left this command executing in the terminal. Something like this should appear:
+
+Then you can go to your browser and go to the following URL:
+
+
+
+
+
 ## HOW TO CREATE A VIRTUAL MACHINE TO INSTALL GPCRMD SERVER:
 
 Download the latest version of [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
