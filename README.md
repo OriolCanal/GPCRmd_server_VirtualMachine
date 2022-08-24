@@ -42,6 +42,8 @@ virtualbox
 
 Once you have your VirtualBox running, click on "File" in the top menu and then select "Import Appliance...".
 
+![](./Pictures/import_OVA.png)
+
 A new window will pop open with a field to select your .ove file. Browse to the directory where you copied the backup_virtualMachine_GPCRmd.ova file. Once selected click on next.
 
 Then it will appear a window where you can choose the key features of the virtual machine (e.g. CPU, RAM ....). Finally click on import button and it can take some time (30 min aprox) to complete the process. After the process completes your Virtual Machine will be ready to use.
