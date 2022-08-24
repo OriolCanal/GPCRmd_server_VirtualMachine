@@ -64,7 +64,7 @@ python manage.py runserver 0.0.0.0:8000
 ```
 It will take some seconds to execute. You should left this command executing in the terminal. Something like this should appear:
 
-![](./Pictures/)
+![](./Pictures/Executing_GPCRmdServer.png)
 
 Then you can go to your browser and go to the following URL:
 
